@@ -4,8 +4,8 @@ public class Grade {
         double Score;
 
         Scanner input =new Scanner(System.in);
-        Score=input.nextDouble();
         System.out.println("Enter your Score:");
+        Score=input.nextDouble();
         if ((Score >= 90) && (Score <= 100)) {
             System.out.println("A");
         } else if ((Score >= 80) && (Score < 90)) {
