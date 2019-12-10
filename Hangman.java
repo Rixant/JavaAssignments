@@ -1,13 +1,40 @@
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Random;
-import java.util.Scanner;
+package games;
+import java.util.*;
+import java.io.*;
 
 public class Hangman {
-    private static String word = readFileAsString();
-    private static String secret = new String(new char[word.length()]).replace("\0", "-");
-    private static int counter = 0;
 
+    public static final String word=readFileAsString();
+    public static String secret = new String(new char[word.length()]).replace("\0", "_");
+    public static StringBuilder guess;
+    public static int misses;
+    public static char[][]board=new char[7][7];
+
+    public static void InitializeBoard()
+    {
+        for (int i=0; i<7; i++)
+        {
+            for (int j=0; j<7; j++)
+                board[i][j]=' ';
+        }
+        for (int j=0; j<=4; j++)
+            board[0][j]='-';
+        for (int i=1; i<=6; i++)
+            board[i][0]='|';
+        board[1][4]='|';
+    }
+
+    public static void PrintBoard()
+    {
+        for (int i=0; i<7; i++)
+        {
+            for (int j=0; j<7; j++)
+            {
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
+    }
 
     public static String readFileAsString() {
         Scanner file = null;
@@ -40,187 +67,109 @@ public class Hangman {
     }
 
 
-    public static void Turn(String guess) {
-        String secretWord = "";
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == guess.charAt(0)) {
-                secretWord += guess.charAt(0);
-            } else if (secret.charAt(i) != '-') {
-                secretWord += word.charAt(i);
-            } else {
-                secretWord += "-";
+    public static void Guess(char l, StringBuilder g)
+ 
+    {
+        boolean correct=false;
+        for (int i=0; i<word.length(); i++)
+        {
+            if (l==word.charAt(i))
+            {
+                g.setCharAt(i, l);
+                correct=true;
+                System.out.println("Good! "+l+" exists in the word");
             }
         }
+        if (correct==false)
+            misses++;
+        System.out.println("Wrong guess. Please try another");
+        System.out.println("You have "+(10-misses)+" tries remaining");
+            Redraw();
+    }
 
-        if (secret.equals(secretWord)) {
-            counter++;
-            EndGame();
-        } else {
-            secret = secretWord;
+    public static void Redraw()
+
+    {
+        if (misses==1)
+        {
+            board[2][3]='(';
         }
-        if (secret.equals(word)) {
-            System.out.println("Correct! You win! The word was " + word);
+        if (misses==2)
+        {
+            board[2][5]=')';
+        }
+        if (misses==3)
+        {
+            board[3][3]='/';
+        }
+        if (misses==4)
+        {
+            board[3][4]='|';
+        }
+        if (misses==5)
+        {
+        board[3][5]='\\';
+        }
+        if (misses==6)
+        {
+            board[4][4]='|';
+        }
+        if (misses==7)
+        {
+            board[5][3]='|';
+        }
+        if (misses==8)
+        {
+            board[5][5]='|';
+        }
+        if (misses==9)
+        {
+            board[6][2]='_';
+        }
+        if (misses==10)
+        {
+            board[6][6]='_';
         }
     }
 
-    public static void EndGame() {
-        if (counter == 1) {
-            System.out.println("Wrong guess, try again");
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println("___|______     ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-
+    public static boolean GameOver(int misses)
+    {
+        if (misses==10)
+        {
+            System.out.println("You Lose!!");
+            return true;
         }
-        if (counter == 2) {
-            System.out.println("Wrong guess, try again");
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("___|______  ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
+        else if (guess.indexOf("_")<0)
+        {
+            System.out.println(" CONGRATULATIONS !!! Great Game !! You Win!");
+            return true;
         }
-        if (counter == 3) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("  __");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("   |        ");
-            System.out.println("___|______  ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 4) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("   ____________");
-            System.out.println("   |           ");
-            System.out.println("   |           ");
-            System.out.println("   |           ");
-            System.out.println("   |            ");
-            System.out.println("   |            ");
-            System.out.println("   |            ");
-            System.out.println("   |            ");
-            System.out.println("___|_______     ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 5) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("   ______________");
-            System.out.println("   |          _|_ ");
-            System.out.println("   |              ");
-            System.out.println("   |              ");
-            System.out.println("   |              ");
-            System.out.println("   |              ");
-            System.out.println("   |              ");
-            System.out.println("   |              ");
-            System.out.println("___|______        ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 6) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("   ____________");
-            System.out.println("   |          _|_");
-            System.out.println("   |         /   \\");
-            System.out.println("   |        |     |");
-            System.out.println("   |         \\_ _/");
-            System.out.println("   |          ");
-            System.out.println("   |          ");
-            System.out.println("   |");
-            System.out.println("___|___");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 7) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("   ____________");
-            System.out.println("   |          _|_");
-            System.out.println("   |         /    \\");
-            System.out.println("   |        | 0  0 |");
-            System.out.println("   |         \\_^_ /");
-            System.out.println("   |                ");
-            System.out.println("   |                 ");
-            System.out.println("   |                 ");
-            System.out.println("___|_______         ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 8) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("   ____________");
-            System.out.println("   |          _|_");
-            System.out.println("   |         /    \\");
-            System.out.println("   |        | 0  0 |");
-            System.out.println("   |         \\_^_ /");
-            System.out.println("   |           |   ");
-            System.out.println("   |           |   ");
-            System.out.println("   |               ");
-            System.out.println("___|___            ");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 9) {
-            System.out.println("Wrong guess, try again");
-            System.out.println("   ____________");
-            System.out.println("   |          _|_");
-            System.out.println("   |         /    \\");
-            System.out.println("   |        | 0  0 |");
-            System.out.println("   |         \\_^_ /");
-            System.out.println("   |           |");
-            System.out.println("   |           |");
-            System.out.println("   |          / \\ ");
-            System.out.println("___|___      /   \\");
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
-        if (counter == 10) {
-            System.out.println("GAME OVER!");
-            System.out.println("   ____________");
-            System.out.println("   |          _|_");
-            System.out.println("   |         /    \\");
-            System.out.println("   |        | 0  0 |");
-            System.out.println("   |         \\_^_ /");
-            System.out.println("   |          _|_");
-            System.out.println("   |         / | \\");
-            System.out.println("   |          / \\ ");
-            System.out.println("___|___      /   \\");
-            System.out.println("GAME OVER! The word was " + word);
-            System.out.println("You have "+(10-counter)+" tries remaining");
-        }
+        return false;
     }
 
-    public static boolean Play() {
-        Scanner input = new Scanner(System.in);
-        String Answer = input.nextLine();
-        if (Answer.equalsIgnoreCase("y")) {
-            boolean test = true;
-            return test;
-        } else {
-            boolean test = false;
-            return test;
-        }
+    public static void PrintWord(StringBuilder s)
+    {
+        System.out.println(s);
     }
 
+    public static void main (String []args)
+    {
+        InitializeBoard();
+        PrintBoard();
+        guess= new StringBuilder(secret);
 
+        misses=0;
+        Scanner keyboard= new Scanner(System.in);
+        System.out.println("Guess a character in the "+(guess.length())+" character word!");
+        System.out.println(guess);
+        while (GameOver(misses)==false)
+        {
 
-        public static void main(String[] args) {
-            System.out.println("Would you like to play game? Y/N");
-            boolean c=Play();
-            while(c==true){
-                Scanner input = new Scanner(System.in);
-                    while (counter < 10 && secret.contains("-")) {
-                        System.out.println("Guess any letter in the word");
-                        System.out.println(secret);
-                        String guess = input.nextLine();
-                        Turn(guess.toLowerCase());
-
-                    }
-//                    System.out.println("********************************");
-//                    System.out.println("Would you like keep playing? Y/N");
-//                    c =Play();
-                } }
+            System.out.print("Enter your guess!");
+            char letter=keyboard.next().charAt(0);
+            Guess(letter, guess);
+            PrintBoard();
+            PrintWord(guess);
+        }
+    }
 }
