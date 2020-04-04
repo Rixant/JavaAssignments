@@ -1,4 +1,4 @@
-<project name="Generic Programming" default="dist" basedir=".">
+<project name="Serialization" default="dist" basedir=".">
 	<description>
 		Games.
   	</description>
@@ -22,16 +22,18 @@
   	</target>
 	
 	<target name="Driver" depends="compile" description="run target">
-		<java classpath="${CLASSES}" classname="Generic.Driver" fork="false"/>
+		<java classpath="${CLASSES}" classname="Serial.Driver" fork="false"/>
+	</target>
+
+	<target name="FileReader" depends="compile" description="run target">
+		<java classpath="${CLASSES}" classname="Serial.FileReader" fork="false"/>
 	</target>
 
 	<target name="Algorithms" depends="compile" description="run target">
-		<java classpath="${CLASSES}" classname="Generic.Algorithms" fork="false"/>
+		<java classpath="${CLASSES}" classname="Serial.Employee" fork="false"/>
 	</target>
 
-	<target name="myString" depends="compile" description="run target">
-		<java classpath="${CLASSES}" classname="Generic.myString" fork="false"/>
-	</target>
+	
 
 
 	
