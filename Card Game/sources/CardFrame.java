@@ -89,15 +89,7 @@ public class CardFrame extends JFrame {
         }
 
 
-
-
-
-
     }
-
-
-
-
 
 
 }
