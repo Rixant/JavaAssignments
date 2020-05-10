@@ -1,0 +1,5 @@
+CS195	Java Programming 1
+CS221	PCOperating Systems
+CS320	Networking and Communications
+CS332	Programming Languages
+CS680	Management of Databases
