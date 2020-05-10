@@ -31,8 +31,6 @@ public class Hash
         for (int k=0;k<5;k++) {
             line = file.nextLine();
             elements[k] = line.split("\t+");
-//            System.out.println(elements[k][0]);
-//            System.out.println(elements[k][0]);
             h.put(elements[k][0], elements[k][1]);
             size++;
             boxsize1=elements[k][0].length();
