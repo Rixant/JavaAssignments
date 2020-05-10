@@ -1,4 +1,4 @@
-<project name="Homework3" default="dist" basedir=".">
+<project name="HashTable" default="dist" basedir=".">
 	<description>
 		Games.
   	</description>
