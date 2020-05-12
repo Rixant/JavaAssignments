@@ -1,1 +1,1 @@
-### This repository is the collection of all the java assignments for Progragramming course
+### This repository is the collection of all the simple java programs 
