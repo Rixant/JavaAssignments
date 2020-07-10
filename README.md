@@ -1,1 +1,3 @@
-### This repository is the collection of all the simple java programs 
+## The contents in this repository belongs to Rishant Rokaha.
+## If you saw the same content anywhere else that is totally plagiarized.
+
